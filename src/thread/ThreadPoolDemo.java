@@ -17,12 +17,12 @@ public class ThreadPoolDemo {
 	public static void main(String[] args) throws Exception {
 		// 测试20个个接口，每个接口耗时 300ms
 		Map<String, Task> map = new HashMap<>();
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 10; i++) {
 			final int flag = i;
 			map.put("task" + i, new Task() {
 				@Override
 				public Object call() throws Exception {
-					Thread.sleep(300); // 模拟远程调用耗时
+					Thread.sleep(flag*100); // 模拟远程调用耗时
 					return "task" + flag; // 模拟返回远程调用结果
 				}
 			});
