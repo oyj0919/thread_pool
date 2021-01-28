@@ -2,8 +2,9 @@
 
 # 解决接口性能问题用
 
- 例如一个接口需要远程调运5个接口，每个接口耗时300毫秒，实际接口性能为5 * 300ms,使用此工具，耗时仅为最长接口耗
-(```)
+> 例如一个接口需要远程调运5个接口，每个接口耗时300毫秒，实际接口性能为5 * 300ms,使用此工具，耗时仅为最长接口耗
+ 
+```
 	Map<String, Task> map = new HashMap<>();
 	for (int i = 0; i < 20; i++) {
 		final int flag = i;
@@ -17,4 +18,4 @@
 	}
 	long time = System.currentTimeMillis();
 	Map<String, Object> execute1 = ThredPoolUtil.execute(map);
-(```)
+```
