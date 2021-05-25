@@ -5,15 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 并发工具类
  */
-public final class ThredPoolUtil {
+public final class ThreadPoolUtil {
 
 	/**
 	 * 线程池
@@ -23,7 +20,7 @@ public final class ThredPoolUtil {
 	/**
 	 * 超时时间
 	 */
-	public final static long TIME_OUT = 30;
+	public final static long TIME_OUT = 200;
 
 	/**
 	 * 无返回值
@@ -66,7 +63,6 @@ public final class ThredPoolUtil {
 			// 将结果与name绑定
 			for (int i = 0; i < taskName.size(); i++) {
 				resMap.put(taskName.get(i), futures.get(i).get());
-				System.out.println(taskName.get(i)+"\t "+futures.get(i).get());
 			}
 		}
 		return resMap;
@@ -91,10 +87,11 @@ public final class ThredPoolUtil {
 		if (threadPool != null) {
 			return threadPool;
 		} else {
-			synchronized (ThredPoolUtil.class) {
+			synchronized (ThreadPoolUtil.class) {
 				if (threadPool == null) {
-					threadPool = new ThreadPoolExecutor(8 , 16, 60, TimeUnit.SECONDS,
-							new LinkedBlockingQueue<>(32), new ThreadPoolExecutor.CallerRunsPolicy());
+					// corePoolSize = cpu_core / (1 - 0.8 to 0.9)
+					threadPool = new ThreadPoolExecutor( 30, 100, 60, TimeUnit.SECONDS,
+							new LinkedBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
 				}
 				return threadPool;
 			}
