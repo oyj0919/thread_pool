@@ -51,7 +51,7 @@ public final class ThreadPoolUtil {
 		// 返回值
 		Map<String, Object> resMap = new HashMap<>();
 		// 获得任务list
-		List<Task> taskList = new ArrayList<>();
+		List<Task<T>> taskList = new ArrayList<>();
 		List<String> taskName = new ArrayList<>();
 		for (Map.Entry<String, Task> entry : tasks.entrySet()) {
 			taskList.add(entry.getValue());

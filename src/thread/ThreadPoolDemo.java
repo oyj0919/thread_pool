@@ -20,15 +20,15 @@ public class ThreadPoolDemo {
 		Map<String, Task> map = new HashMap<>();
 		for (int i = 0; i < 10000; i++) {
 			final int flag = i;
-			map.put("task" + i, new Task() {
-				@Override
-				public Object call() throws Exception {
+			map.put("task" + i, () -> {
+				try {
 					Thread.sleep(10); // 模拟远程调用耗时
-					return "task" + flag; // 模拟返回远程调用结果
+				}catch (Exception e){
+					e.printStackTrace();
 				}
+				return "task" + flag; // 模拟返回远程调用结果
 			});
 		}
-
 		Map<String, Object> execute1 = ThreadPoolUtil.execute(map);
 		System.out.println("long time: " + (System.currentTimeMillis() - time) + "\t execute1 : " + execute1.size() );
 	}
